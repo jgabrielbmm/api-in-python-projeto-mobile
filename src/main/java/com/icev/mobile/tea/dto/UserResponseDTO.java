@@ -1,6 +1,8 @@
 package com.icev.mobile.tea.dto;
 
+import com.icev.mobile.tea.domain.GenderType;
+
 import java.util.Date;
 
-public record UserResponseDTO(String name, String email, Date dateOfBirth, Boolean isASD, Boolean knowSomeoneWithASD) {
+public record UserResponseDTO(String name, String email, Date dateOfBirth, GenderType gender, Boolean isASD, Boolean knowSomeoneWithASD) {
 }

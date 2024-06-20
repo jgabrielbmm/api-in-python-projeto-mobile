@@ -22,6 +22,7 @@ public class UserService {
         User user = new User();
         user.setName(userCreateDto.name());
         user.setEmail(userCreateDto.email());
+        user.setGender(userCreateDto.gender());
         user.setDateOfBirth(userCreateDto.dateOfBirth());
         user.setIsASD(userCreateDto.isASD());
         user.setKnowSomeoneWithASD(userCreateDto.knowSomeoneWithASD());
@@ -37,7 +38,7 @@ public class UserService {
     public UserResponseDTO findUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new UserResponseDTO(user.getName(), user.getEmail(), user.getDateOfBirth(),
+        return new UserResponseDTO(user.getName(), user.getEmail(), user.getDateOfBirth(), user.getGender(),
                     user.getIsASD(), user.getKnowSomeoneWithASD());
     }
 }
