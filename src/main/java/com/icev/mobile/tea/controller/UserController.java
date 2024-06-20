@@ -1,10 +1,10 @@
 package com.icev.mobile.tea.controller;
 
-import com.icev.mobile.tea.dto.UserCreateDTORequest;
+import com.icev.mobile.tea.dto.UserCreateRequestDTO;
 import com.icev.mobile.tea.domain.User;
 import com.icev.mobile.tea.dto.UserResponseDTO;
+import com.icev.mobile.tea.dto.UserUpdateRequestDTO;
 import com.icev.mobile.tea.services.UserService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +25,22 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody UserCreateDTORequest userCreateDTORequest) {
+    public ResponseEntity<User> createUser(@RequestBody UserCreateRequestDTO userCreateDTORequest) {
         User user = userService.createUser(userCreateDTORequest);
 
         return ResponseEntity.ok().body(user);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        System.out.println("chamou");
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
+        userService.update(id, userUpdateRequestDTO);
+        return ResponseEntity.noContent().build();
     }
 }
