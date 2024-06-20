@@ -26,6 +26,8 @@ public class User {
 
     private String email;
 
+    private GenderType gender;
+
     private Date dateOfBirth;
 
     private Boolean isASD;
