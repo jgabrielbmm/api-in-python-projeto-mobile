@@ -24,6 +24,8 @@ public class UserService {
         user.setEmail(userCreateDto.email());
         user.setGender(userCreateDto.gender());
         user.setDateOfBirth(userCreateDto.dateOfBirth());
+        user.setCity(userCreateDto.city());
+        user.setState(userCreateDto.state());
         user.setIsASD(userCreateDto.isASD());
         user.setKnowSomeoneWithASD(userCreateDto.knowSomeoneWithASD());
         user.setDeleted(false);
@@ -39,7 +41,7 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
         return new UserResponseDTO(user.getName(), user.getEmail(), user.getDateOfBirth(), user.getGender(),
-                    user.getIsASD(), user.getKnowSomeoneWithASD());
+                    user.getCity(), user.getState(), user.getIsASD(), user.getKnowSomeoneWithASD());
     }
 
     public void delete(Long id) {
@@ -59,6 +61,8 @@ public class UserService {
         user.setName(userUpdateRequestDTO.name());
         user.setEmail(userUpdateRequestDTO.email());
         user.setGender(userUpdateRequestDTO.gender());
+        user.setCity(userUpdateRequestDTO.city());
+        user.setState(userUpdateRequestDTO.state());
         user.setDateOfBirth(userUpdateRequestDTO.dateOfBirth());
         user.setIsASD(userUpdateRequestDTO.isASD());
         user.setKnowSomeoneWithASD(userUpdateRequestDTO.knowSomeoneWithASD());

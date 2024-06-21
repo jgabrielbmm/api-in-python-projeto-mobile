@@ -30,6 +30,10 @@ public class User {
 
     private Date dateOfBirth;
 
+    private String city;
+
+    private String state;
+
     private Boolean isASD;
 
     private Boolean knowSomeoneWithASD;
