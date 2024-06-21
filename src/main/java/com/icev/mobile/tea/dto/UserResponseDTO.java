@@ -4,5 +4,5 @@ import com.icev.mobile.tea.domain.GenderType;
 
 import java.util.Date;
 
-public record UserResponseDTO(String name, String email, Date dateOfBirth, GenderType gender, Boolean isASD, Boolean knowSomeoneWithASD) {
+public record UserResponseDTO(String name, String email, Date dateOfBirth, GenderType gender, String city, String state, Boolean isASD, Boolean knowSomeoneWithASD) {
 }
