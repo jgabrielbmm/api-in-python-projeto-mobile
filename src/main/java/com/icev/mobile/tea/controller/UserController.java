@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:8081")
 public class UserController {
 
     UserService userService;
@@ -25,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody UserCreateRequestDTO userCreateDTORequest) {
-        User user = userService.createUser(userCreateDTORequest);
+    public ResponseEntity<User> createOrUpdateUser(@RequestBody UserCreateRequestDTO userCreateDTORequest) {
+        User user = userService.createOrUpdateUser(userCreateDTORequest);
 
         return ResponseEntity.ok().body(user);
     }
@@ -38,9 +39,9 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
-        userService.update(id, userUpdateRequestDTO);
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping("{id}")
+//    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
+//        userService.update(id, userUpdateRequestDTO);
+//        return ResponseEntity.noContent().build();
+//    }
 }

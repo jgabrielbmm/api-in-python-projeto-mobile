@@ -28,15 +28,13 @@ public class User {
 
     private GenderType gender;
 
-    private Date dateOfBirth;
-
     private String city;
 
     private String state;
 
-    private Boolean isASD;
+    private AnswerEnum isASD;
 
-    private Boolean knowSomeoneWithASD;
+    private AnswerEnum knowSomeoneWithASD;
 
     private Boolean deleted;
 
