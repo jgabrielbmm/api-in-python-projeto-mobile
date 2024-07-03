@@ -1,14 +1,14 @@
 package com.icev.mobile.tea.domain;
 
-public enum GenderType {
-    MALE,
-    FEMALE,
-    NOTBINARY;
 
+public enum AnswerEnum {
+    YES,
+    NO,
+    UNKNOWN;
 
-    static GenderType convert(String gender) {
+    static AnswerEnum convert(String answer) {
         try {
-            return GenderType.valueOf(gender.toUpperCase());
+            return AnswerEnum.valueOf(answer.toUpperCase());
         } catch (IllegalArgumentException | NullPointerException exception) {
             throw new RuntimeException("Invalid value of gender");
         }

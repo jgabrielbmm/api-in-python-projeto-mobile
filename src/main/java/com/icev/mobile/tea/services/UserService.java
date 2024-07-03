@@ -1,5 +1,6 @@
 package com.icev.mobile.tea.services;
 
+import com.icev.mobile.tea.controller.UserController;
 import com.icev.mobile.tea.dto.UserCreateRequestDTO;
 import com.icev.mobile.tea.domain.User;
 import com.icev.mobile.tea.dto.UserResponseDTO;
@@ -8,6 +9,7 @@ import com.icev.mobile.tea.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,12 +20,20 @@ public class UserService {
         this.userRepository= userRepository;
     }
 
+    public User createOrUpdateUser(UserCreateRequestDTO userCreateDto) {
+        User user = userRepository.findByEmail(userCreateDto.email());
+        if (user == null) {
+            return createUser(userCreateDto);
+        } else {
+            return update(userCreateDto, user);
+        }
+    }
+
     public User createUser(UserCreateRequestDTO userCreateDto) {
         User user = new User();
         user.setName(userCreateDto.name());
         user.setEmail(userCreateDto.email());
         user.setGender(userCreateDto.gender());
-        user.setDateOfBirth(userCreateDto.dateOfBirth());
         user.setCity(userCreateDto.city());
         user.setState(userCreateDto.state());
         user.setIsASD(userCreateDto.isASD());
@@ -40,7 +50,7 @@ public class UserService {
     public UserResponseDTO findUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new UserResponseDTO(user.getName(), user.getEmail(), user.getDateOfBirth(), user.getGender(),
+        return new UserResponseDTO(user.getName(), user.getEmail(), user.getGender(),
                     user.getCity(), user.getState(), user.getIsASD(), user.getKnowSomeoneWithASD());
     }
 
@@ -52,21 +62,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void update(Long id, UserUpdateRequestDTO userUpdateRequestDTO) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    public User update(UserCreateRequestDTO userCreateRequestDTO, User user) {
 
         if (user.getDeleted()) {
             throw new RuntimeException("User deleted");
         }
-        user.setName(userUpdateRequestDTO.name());
-        user.setEmail(userUpdateRequestDTO.email());
-        user.setGender(userUpdateRequestDTO.gender());
-        user.setCity(userUpdateRequestDTO.city());
-        user.setState(userUpdateRequestDTO.state());
-        user.setDateOfBirth(userUpdateRequestDTO.dateOfBirth());
-        user.setIsASD(userUpdateRequestDTO.isASD());
-        user.setKnowSomeoneWithASD(userUpdateRequestDTO.knowSomeoneWithASD());
 
-        userRepository.save(user);
+        user.setGender(userCreateRequestDTO.gender());
+        user.setCity(userCreateRequestDTO.city());
+        user.setState(userCreateRequestDTO.state());
+        user.setIsASD(userCreateRequestDTO.isASD());
+        user.setKnowSomeoneWithASD(userCreateRequestDTO.knowSomeoneWithASD());
+
+        return userRepository.save(user);
     }
 }
