@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:8081")
 public class UserController {
 
     UserService userService;
@@ -20,22 +19,18 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping("/info")
     public ResponseEntity<UserResponseDTO> getUser(@RequestBody UserInfoRequestDTO userInfoRequestDTO){
         UserResponseDTO userResponseDTO = userService.findUserByEmail(userInfoRequestDTO);
         return ResponseEntity.ok().body(userResponseDTO);
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping()
     public ResponseEntity<User> createOrUpdateUser(@RequestBody UserCreateRequestDTO userCreateDTORequest) {
         User user = userService.createOrUpdateUser(userCreateDTORequest);
 
         return ResponseEntity.ok().body(user);
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
