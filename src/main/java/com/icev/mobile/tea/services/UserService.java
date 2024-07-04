@@ -3,6 +3,7 @@ package com.icev.mobile.tea.services;
 import com.icev.mobile.tea.controller.UserController;
 import com.icev.mobile.tea.dto.UserCreateRequestDTO;
 import com.icev.mobile.tea.domain.User;
+import com.icev.mobile.tea.dto.UserInfoRequestDTO;
 import com.icev.mobile.tea.dto.UserResponseDTO;
 import com.icev.mobile.tea.dto.UserUpdateRequestDTO;
 import com.icev.mobile.tea.repository.UserRepository;
@@ -47,8 +48,16 @@ public class UserService {
         return user;
     }
 
-    public UserResponseDTO findUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    public UserResponseDTO findUserByEmail(UserInfoRequestDTO userInfoRequestDTO) {
+        User user = userRepository.findByEmail(userInfoRequestDTO.email());
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        if (user.getDeleted()) {
+            throw new RuntimeException("User deleted");
+        }
 
         return new UserResponseDTO(user.getName(), user.getEmail(), user.getGender(),
                     user.getCity(), user.getState(), user.getIsASD(), user.getKnowSomeoneWithASD());

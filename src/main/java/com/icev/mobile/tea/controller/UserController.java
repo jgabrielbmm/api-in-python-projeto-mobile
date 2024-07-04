@@ -2,6 +2,7 @@ package com.icev.mobile.tea.controller;
 
 import com.icev.mobile.tea.dto.UserCreateRequestDTO;
 import com.icev.mobile.tea.domain.User;
+import com.icev.mobile.tea.dto.UserInfoRequestDTO;
 import com.icev.mobile.tea.dto.UserResponseDTO;
 import com.icev.mobile.tea.dto.UserUpdateRequestDTO;
 import com.icev.mobile.tea.services.UserService;
@@ -19,9 +20,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id){
-        UserResponseDTO userResponseDTO = userService.findUserById(id);
+    @PostMapping("/info")
+    public ResponseEntity<UserResponseDTO> getUser(@RequestBody UserInfoRequestDTO userInfoRequestDTO){
+        UserResponseDTO userResponseDTO = userService.findUserByEmail(userInfoRequestDTO);
         return ResponseEntity.ok().body(userResponseDTO);
     }
 
@@ -34,14 +35,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        System.out.println("chamou");
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-//    @PutMapping("{id}")
-//    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
-//        userService.update(id, userUpdateRequestDTO);
-//        return ResponseEntity.noContent().build();
-//    }
 }
